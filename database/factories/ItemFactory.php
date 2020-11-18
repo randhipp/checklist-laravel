@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Item;
+use App\Models\Checklist;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class ItemFactory extends Factory
 {
@@ -22,7 +24,11 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'checklist_id' => Checklist::factory(),
+            'description' => $this->faker->name,
+            'urgency' => $this->faker->randomDigitNotNull(),
+            'due_interval' => $this->faker->numberBetween($min = 1, $max = 60),
+            'due_unit' => 'minute'
         ];
     }
 }

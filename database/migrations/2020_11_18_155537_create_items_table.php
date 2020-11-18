@@ -15,6 +15,11 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('checklist_id');
+            $table->string('description');
+            $table->smallInteger('urgency');
+            $table->smallInteger('due_interval');
+            $table->string('due_unit');
             $table->timestamps();
         });
     }
