@@ -14,6 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+        'middleware' => [ 'json', 'auth:sanctum' ],
+        'prefix' => 'v1',
+        'namespace' => 'Api\v1'
+    ], function () {
+
+        // test auth sanctum
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
+
+        Route::group(['prefix' => 'checklists'], function () {
+            Route::resource('templates', 'TemplateController');
+
+        });
+
 });
