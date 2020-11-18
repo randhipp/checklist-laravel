@@ -25,6 +25,7 @@ Route::group([
             return $request->user();
         });
 
+        // {{url}}/api/v1/templates/
         Route::group(['prefix' => 'checklists'], function () {
             Route::resource('templates', 'TemplateController');
 
