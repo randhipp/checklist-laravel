@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::group([
         'middleware' => [ 'json', 'auth:sanctum' ],
         'prefix' => 'v1',
-        'namespace' => 'Api\v1'
+        'namespace' => 'App\Http\Controllers\Api\v1'
+
     ], function () {
 
         // test auth sanctum

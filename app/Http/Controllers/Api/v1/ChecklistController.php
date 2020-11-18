@@ -14,7 +14,9 @@ class ChecklistController extends Controller
      */
     public function index()
     {
-        //
+
+        return Checklist::with('items')->paginate(10);
+
     }
 
     /**

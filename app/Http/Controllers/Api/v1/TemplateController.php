@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\Checklist;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,7 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        //
+        return Checklist::with('items')->paginate(10);
     }
 
     /**
