@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Checklist;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+use App\Http\Resources\Checklist as ChecklistResource;
+
 
 class ChecklistController extends Controller
 {
@@ -14,8 +18,11 @@ class ChecklistController extends Controller
      */
     public function index()
     {
+        // return response()->json($data, 200, $headers);
 
-        return Checklist::with('items')->paginate(10);
+        return ChecklistResource::collection(Checklist::simplePaginate(10))->toResponse(Checklist::simplePaginate(10));
+
+        // return response();
 
     }
 

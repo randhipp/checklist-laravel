@@ -27,9 +27,9 @@ Route::group([
         });
 
         // {{url}}/api/v1/templates/
-        Route::group(['prefix' => 'checklists'], function () {
-            Route::resource('templates', 'TemplateController');
+        Route::resource('checklists/templates', 'TemplateController');
 
-        });
+        Route::resource('checklists', 'ChecklistController');
+
 
 });
