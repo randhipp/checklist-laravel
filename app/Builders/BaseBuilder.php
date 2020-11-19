@@ -16,11 +16,11 @@ class BaseBuilder extends Builder
      * @param  int  $perPage
      * @param  int  $currentPage
      * @param  array  $options
-     * @return \App\Pagination\YourCustomPaginator
+     * @return \App\Pagination\CustomPaginator
      */
     protected function paginator($items, $total, $perPage, $currentPage, $options)
     {
-        return Container::getInstance()->makeWith(Pagination\YourCustomPaginator::class, compact(
+        return Container::getInstance()->makeWith(\App\Pagination\CustomPaginator::class, compact(
             'items', 'total', 'perPage', 'currentPage', 'options'
         ));
     }

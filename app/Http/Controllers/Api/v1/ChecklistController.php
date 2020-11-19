@@ -20,7 +20,7 @@ class ChecklistController extends Controller
     {
         // return response()->json($data, 200, $headers);
 
-        return ChecklistResource::collection(Checklist::simplePaginate(10))->toResponse(Checklist::simplePaginate(10));
+        return Checklist::paginate(10);
 
         // return response();
 
