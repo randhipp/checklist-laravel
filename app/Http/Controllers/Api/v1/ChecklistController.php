@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Checklist;
+use App\Models\Item;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChecklistApiRequest;
@@ -70,7 +72,21 @@ class ChecklistController extends Controller
 
         $checklist = Checklist::create($data);
 
-        return $this->show($checklist);
+        // saving items
+        $items_data = $request->data['attributes']['items'];
+
+        if($items_data !== []){
+            foreach ($items_data as $key => $value) {
+                $items[] = new Item([
+                    'description' => $value
+                ]);
+            }
+            $checklist = Checklist::find($checklist->id);
+            $checklist->items()->saveMany($items);
+        }
+
+        return response()->json($this->transformData($checklist), 201);
+
 
     }
 
@@ -82,16 +98,8 @@ class ChecklistController extends Controller
      */
     public function show(Checklist $checklist)
     {
-        $domain = \explode('.',request()->route()->getName())[0];
-
-        return [
-            'type' => $domain,
-            'id' => $checklist->id,
-            'attributes' => $checklist,
-            'links' => [
-                'self' => url('api/v1/'.$domain, $checklist->id)
-            ]
-        ] ;
+        $data = $this->transformData($checklist);
+        return response()->json($data, 200);
     }
 
     /**
@@ -114,7 +122,13 @@ class ChecklistController extends Controller
      */
     public function update(Request $request, Checklist $checklist)
     {
-        //
+        $data = $request->data['attributes'];
+
+        unset($data['items']);
+
+        $checklist->update($data);
+
+        return response()->json($this->transformData(Checklist::find($checklist->id)), 200);
     }
 
     /**
@@ -125,6 +139,31 @@ class ChecklistController extends Controller
      */
     public function destroy(Checklist $checklist)
     {
-        //
+        $checklist->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Delete success!'
+        ], 200);
+
+    }
+
+    /**
+     * Transform data to API standar.
+     *
+     * @param  \App\Models\Checklist  $checklist
+     * @return Array
+     */
+    public function transformData(Checklist $checklist)
+    {
+        $domain = \explode('.',request()->route()->getName())[0];
+
+        return [
+            'type' => $domain,
+            'id' => $checklist->id,
+            'attributes' => Checklist::with('items')->find($checklist->id),
+            'links' => [
+                'self' => url('api/v1/'.$domain, $checklist->id)
+            ]
+        ];
     }
 }

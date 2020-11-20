@@ -29,7 +29,7 @@ class ChecklistApiRequest extends FormRequest
             'data.attributes.due' => 'date_format:Y-m-d\TH:i:sP',
             'data.attributes.urgency' => 'integer',
             'data.attributes.description' => 'required|string',
-            'data.attributes.items' => 'required|array',
+            'data.attributes.items' => 'array',
             'data.attributes.task_id' => 'string',
 
         ];

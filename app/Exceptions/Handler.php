@@ -54,6 +54,13 @@ class Handler extends ExceptionHandler
             ], 500);
         }
 
+        if($e instanceof \Illuminate\Auth\AuthenticationException ){
+            return response()->json([
+                'status' => "401",
+                'error' => "Not Authorized"
+            ], 401);
+        }
+
         return parent::render($request, $e);
     }
 
