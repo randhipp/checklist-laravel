@@ -13,6 +13,8 @@ class Item extends Model
 
     protected static $logAttributes = ['*'];
 
+    public $fillable = ['description'];
+
     protected $hidden = [
         'id','created_at','updated_at'
     ];

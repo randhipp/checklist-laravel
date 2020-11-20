@@ -14,11 +14,16 @@ class AddBlamableFieldChecklists extends Migration
     public function up()
     {
         Schema::table('checklists', function (Blueprint $table) {
-            $table->string('object_domain')->after('id')->default('domain');
+            $table->string('task_id')->after('id')->nullable();
+            $table->string('object_id')->after('id');
+            $table->string('object_domain')->after('id');
             $table->integer('deleted_by')->nullable()->after('due_unit');
             $table->integer('updated_by')->nullable()->after('due_unit');
             $table->integer('created_by')->nullable()->after('due_unit');
+            $table->boolean('completed_at')->nullable()->after('due_unit');
             $table->boolean('is_completed')->nullable()->default(false)->after('due_unit');
+            $table->dateTime('due')->nullable()->after('due_unit');
+            $table->integer('urgency')->after('due_unit')->nullable();
         });
     }
 
