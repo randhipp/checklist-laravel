@@ -13,8 +13,17 @@ class Checklist extends BaseModel
 
     protected static $logAttributes = ['*'];
 
+    protected $fillable = [
+        'object_domain','object_id','due','urgency','description','task_id'
+    ];
+
     protected $hidden = [
-        'id','created_at','updated_at'
+        'id','deleted_by'
+    ];
+
+    protected $casts = [
+        'is_completed' => 'boolean',
+        'due' => 'datetime'
     ];
 
     public function items()

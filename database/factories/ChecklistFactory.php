@@ -23,9 +23,13 @@ class ChecklistFactory extends Factory
     public function definition()
     {
         return [
+            'object_domain' => 'contact',
+            'object_id' => $this->faker->numberBetween($min = 1, $max = 9999),
             'description' => $this->faker->name,
             'due_interval' => $this->faker->randomDigitNotNull(),
-            'due_unit' => 'hour'
+            'due_unit' => 'hour',
+            'urgency' => $this->faker->randomDigitNotNull(),
+            'is_completed' => 0
         ];
     }
 }

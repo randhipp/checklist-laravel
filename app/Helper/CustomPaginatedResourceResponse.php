@@ -7,6 +7,23 @@ use Illuminate\Support\Arr;
 
 class CustomPaginatedResourceResponse extends PaginatedResourceResponse
 {
+    public function toResponse($request)
+    {
+        return tap(response()->json(
+            $this->wrap(
+                $this->resource->resolve($request),
+                array_merge_recursive(
+                    $this->paginationInformation($request),
+                    $this->resource->with($request),
+                    $this->resource->additional
+                )
+            ),
+            $this->calculateStatus()
+        ), function ($response) use ($request) {
+            $this->resource->withResponse($request, $response);
+        });
+    }
+
     protected function paginationLinks($paginated)
     {
         return [

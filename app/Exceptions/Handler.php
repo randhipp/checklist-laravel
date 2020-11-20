@@ -37,4 +37,24 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException or $e instanceof NotFoundHttpException) {
+            return response()->json([
+                'status' => "404",
+                'error' => "Not Found"
+            ], 404);
+        }
+
+        if ($e instanceof ErrorException) {
+            return response()->json([
+                'status' => "500",
+                'error' => "Server Error"
+            ], 500);
+        }
+
+        return parent::render($request, $e);
+    }
+
 }

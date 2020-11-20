@@ -15,8 +15,27 @@ class CustomPaginator extends LengthAwarePaginator
      */
     public function toArray()
     {
+        $data = $this->items;
+
+        $domain = \explode('.',request()->route()->getName())[0];
+
+        $data->transform(function ($item, $key) use ($domain) {
+
+            $newFormat[$key] = [
+                'type' => $domain,
+                'id' => $item->id,
+                'attributes' => $item,
+                'links' => [
+                    'self' => url('api/v1/'.$domain, $item->id)
+                ]
+            ] ;
+
+
+            return $newFormat;
+        });
+
         return [
-            'data' => $this->items->toArray(),
+            'data' => $data->toArray(),
             'meta' => [
                 'count' => $this->perPage()*$this->currentPage(),
                 'total' => $this->total(),

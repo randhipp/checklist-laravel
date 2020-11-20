@@ -31,5 +31,4 @@ Route::group([
 
         Route::resource('checklists', 'ChecklistController');
 
-
 });
