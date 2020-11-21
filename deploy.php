@@ -75,7 +75,7 @@ task('deploy:secrets', function () {
 host('checklists.wafvel.com') // Name of the server
     ->hostname('34.101.203.145') // Hostname or IP address
     ->stage('production') // Deployment stage (production, staging, etc)
-    ->user('deployer') // SSH user
+    ->user('randhi') // SSH user
     ->set('deploy_path', '/var/www/checklists');
 
     after('deploy:failed', 'deploy:unlock'); // Unlock after failed deploy
