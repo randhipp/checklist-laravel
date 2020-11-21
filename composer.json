@@ -18,7 +18,8 @@
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.5",
         "richan-fongdasen/eloquent-blameable": "^1.6",
-        "spatie/laravel-activitylog": "^3.16"
+        "spatie/laravel-activitylog": "^3.16",
+        "fakerphp/faker": "^1.9.1"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.29.3",
