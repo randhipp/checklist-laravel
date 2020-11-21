@@ -22,6 +22,7 @@
         "codedungeon/phpunit-result-printer": "^0.29.3",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "helmich/phpunit-json-assert": "^3.3",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3"

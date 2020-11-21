@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use Helmich\JsonAssert\JsonAssertions;
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,6 +13,7 @@ use Laravel\Sanctum\Sanctum;
 
 class ChecklistCreateTest extends TestCase
 {
+    use JsonAssertions;
     /**
      * Testing Create With no Auth Token
      *
@@ -67,7 +70,7 @@ class ChecklistCreateTest extends TestCase
      *
      * @return void
      */
-     public function testCreateValidationCorrectValue()
+     public function testCreateSuccessWithMatchedJsonSchema()
      {
          Sanctum::actingAs(
              User::find(1),
@@ -87,6 +90,9 @@ class ChecklistCreateTest extends TestCase
              'Accept' => 'application/json',
          ]);
 
-         $response->assertStatus(201);
-     }
+        $jsonDocument = app_path('storage/json-schema/checklists','one.json');
+
+        $this->assertJsonDocumentMatchesSchema($jsonDocument, $response->getContent());
+
+    }
 }

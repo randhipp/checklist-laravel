@@ -90,7 +90,9 @@ class ChecklistController extends Controller
         }
 
 
-        return response()->json($this->transformData($checklist), 201);
+        return response()->json([
+            'data' => $this->transformData($checklist)
+        ], 201);
 
 
     }
@@ -104,7 +106,9 @@ class ChecklistController extends Controller
     public function show(Checklist $checklist)
     {
         $data = $this->transformData($checklist);
-        return response()->json($data, 200);
+        return response()->json([
+            'data' => $data
+        ], 200);
     }
 
     /**
