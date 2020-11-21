@@ -40,9 +40,9 @@ class ChecklistController extends Controller
 
         $data = new ChecklistResource($query->paginate($page_limit));
 
-        if(!isset($data) || !$data){
-            return Requests_Exception_HTTP_500;
-        }
+        // if(!isset($data) || !$data){
+        //     return Requests_Exception_HTTP_500;
+        // }
 
         return $data;
 
@@ -137,7 +137,10 @@ class ChecklistController extends Controller
 
         $checklist->update($data);
 
-        return response()->json($this->transformData(Checklist::find($checklist->id)), 200);
+        $data = $this->transformData($checklist);
+        return response()->json([
+            'data' => $data
+        ], 200);
     }
 
     /**
