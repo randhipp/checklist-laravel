@@ -57,5 +57,5 @@ jobs:
       env:
         DOT_ENV: ${{ secrets.DOT_ENV }}
       run: dep deploy development --tag=${{ env.GITHUB_REF }} -vvv
-    - name: Chown & Chmod www-data
-      run: sudo chown www-data:www-data /var/www/checklists -R && sudo chmod g+rwx /var/www/checklists -R
+    - name: chown www-data & chmod g+rwx
+      run: sudo chown www-data:www-data . -R && sudo chmod g+rwx . -R
