@@ -57,5 +57,3 @@ jobs:
       env:
         DOT_ENV: ${{ secrets.DOT_ENV }}
       run: dep deploy development --tag=${{ env.GITHUB_REF }} -vvv
-    - name: chown www-data & chmod g+rwx
-      run: sudo chown www-data:www-data . -R && sudo chmod g+rwx . -R

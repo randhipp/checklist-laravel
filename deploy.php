@@ -65,6 +65,11 @@ add('rsync', [
     ],
 ]);
 
+task('deploy:owner', function () {
+    run('sudo chown www-data:www-data /var/www/checklists -R');
+    run('sudo chmod g+rwx /var/www/checklists -R');
+});
+
 // Set up a deployer task to copy secrets to the server.
 // Grabs the dotenv file from the github secret
 task('deploy:secrets', function () {
@@ -93,11 +98,14 @@ host('checklists.wafvel.com') // Name of the server
         'deploy:writable',
         'artisan:storage:link', // |
         'artisan:view:cache',   // |
-        'artisan:config:cache', // | Laravel specific steps
+        'artisan:config:cache',
+        'artisan:cache:clear', // | Laravel specific steps
         'artisan:optimize',     // |
         'artisan:migrate:fresh',// |
         'artisan:db:seed',// |
         'deploy:symlink',
         'deploy:unlock',
+        'deploy:owner',
+        'artisan:optimize',
         'cleanup',
     ]);
