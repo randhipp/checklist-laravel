@@ -23,7 +23,8 @@ class Checklist extends BaseModel
 
     protected $casts = [
         'is_completed' => 'boolean',
-        'due' => 'datetime'
+        'due' => 'datetime',
+        'urgency' => 'integer'
     ];
 
     public function items()

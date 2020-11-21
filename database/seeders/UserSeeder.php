@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 
 use Illuminate\Database\Seeder;
-use Log;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class UserSeeder extends Seeder
 {
@@ -16,19 +16,23 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        Log::channel('stderr')->info("Creating admin user...");
+        $output = new ConsoleOutput();
+        $output->writeln("<info>Creating admin & dummy user...</info>");
+        // Log::channel('stderr')->info("Creating admin user...");
         User::factory(1)->create([
             'name' => 'admin',
             'email' => 'admin@admin.com'
         ]);
-        Log::channel('stderr')->info("Admin created!");
-        Log::channel('stderr')->info("Creating 10 dummy user...");
-        User::factory(10)->create();
-        Log::channel('stderr')->info("Users created!");
-        Log::channel('stderr')->info("Create Sanctum Token...");
+        // Log::channel('stderr')->info("Admin created!");
+        // Log::channel('stderr')->info("Creating 10 dummy user...");
+        User::factory(1)->create();
+        // Log::channel('stderr')->info("Users created!");
+        // Log::channel('stderr')->info("Create Sanctum Token...");
         foreach(User::all() as $user){
             $token = $user->createToken('default-token');
-            Log::channel('stderr')->info("Token created for $user->email -> $token->plainTextToken");
+            $output->writeln("User & Token created for $user->email -> $token->plainTextToken");
+
+            // Log::channel('stderr')->info("Token created for $user->email -> $token->plainTextToken");
         }
     }
 }
