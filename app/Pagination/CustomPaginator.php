@@ -21,7 +21,7 @@ class CustomPaginator extends LengthAwarePaginator
 
         $data->transform(function ($item, $key) use ($domain) {
 
-            $newFormat[$key] = [
+            $newFormat = [
                 'type' => $domain,
                 'id' => $item->id,
                 'attributes' => $item,

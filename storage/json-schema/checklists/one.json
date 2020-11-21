@@ -15,7 +15,7 @@
             "type": "string"
           },
           "id": {
-            "type": "integer"
+            "type": "string"
           },
           "attributes": {
             "type": "object",
@@ -42,10 +42,10 @@
                 "type": "null"
               },
               "updated_by": {
-                "type": "string"
+                "type": ["integer","null"]
               },
               "updated_at": {
-                "type": "null"
+                "type": ["string","null"]
               },
               "created_at": {
                 "type": "string"

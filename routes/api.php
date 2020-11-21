@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +14,33 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+if(config('app.env') == 'local'){
+    Route::post('v1/user/token', function (Request $request) {
+
+        $user = User::where('email',$request->email)->first();
+
+        if(!$user){
+            return response()->json([
+                'status' => '401',
+                'error' => 'Unauthorized'
+            ], 401);
+        }
+
+        if (! Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'status' => '401',
+                'error' => 'Unauthorized'
+            ], 401);
+        }
+
+        return [
+            'token' => explode( '|', $user->createToken('api')->plainTextToken )[1],
+            'user' => $user
+        ];
+    })->middleware(['json','api']);
+}
+
 
 Route::group([
         'middleware' => [ 'json', 'auth:sanctum' ],
