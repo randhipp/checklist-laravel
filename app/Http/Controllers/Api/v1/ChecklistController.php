@@ -72,18 +72,23 @@ class ChecklistController extends Controller
 
         $checklist = Checklist::create($data);
 
-        // saving items
-        $items_data = $request->data['attributes']['items'];
+        // saving items : optional
+        try {
+            $items_data = $request->data['attributes']['items'];
 
-        if($items_data !== []){
-            foreach ($items_data as $key => $value) {
-                $items[] = new Item([
-                    'description' => $value
-                ]);
+            if($items_data !== []){
+                foreach ($items_data as $key => $value) {
+                    $items[] = new Item([
+                        'description' => $value
+                    ]);
+                }
+                $checklist = Checklist::find($checklist->id);
+                $checklist->items()->saveMany($items);
             }
-            $checklist = Checklist::find($checklist->id);
-            $checklist->items()->saveMany($items);
+        } catch (\Throwable $th) {
+            Log::info($th);
         }
+
 
         return response()->json($this->transformData($checklist), 201);
 

@@ -19,6 +19,7 @@
         "spatie/laravel-activitylog": "^3.16"
     },
     "require-dev": {
+        "codedungeon/phpunit-result-printer": "^0.29.3",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.4.2",
