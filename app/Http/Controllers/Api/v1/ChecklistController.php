@@ -8,6 +8,7 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChecklistApiRequest;
+use App\Http\Requests\ChecklistPatchRequest;
 
 use App\Http\Resources\Checklist as ChecklistResource;
 
@@ -129,7 +130,7 @@ class ChecklistController extends Controller
      * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Checklist $checklist)
+    public function update(ChecklistPatchRequest $request, Checklist $checklist)
     {
         $data = $request->data['attributes'];
 
