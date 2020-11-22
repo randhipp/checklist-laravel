@@ -41,10 +41,10 @@ class ItemsCreateTest extends TestCase
             ['login']
         );
 
-        $response = $this->json('POST','/api/v1/checklists/1/items',
+        $response = $this->json('POST','/api/v1/checklists/2/items',
         [
             'data' => [
-                'attributes' => [
+                'attribute' => [
                     'description' => '',
                     'object_id' => '',
                     'object_domain' => ''
@@ -69,7 +69,7 @@ class ItemsCreateTest extends TestCase
              ['login']
          );
 
-         $response = $this->json('POST','/api/v1/checklists/1/items',
+         $response = $this->json('POST','/api/v1/checklists/2/items',
          [
             'data' => [
                 'attributes' => [
