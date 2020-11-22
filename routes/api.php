@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 |
 */
 
-if(config('app.env') == 'local'){
+// if(config('app.env') == 'local'){
     Route::post('v1/user/token', function (Request $request) {
 
         $user = User::where('email',$request->email)->first();
@@ -39,7 +39,7 @@ if(config('app.env') == 'local'){
             'user' => $user
         ];
     })->middleware(['json','api']);
-}
+// }
 
 
 Route::group([
