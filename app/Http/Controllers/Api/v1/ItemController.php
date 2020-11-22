@@ -10,12 +10,36 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Checklist;
 use App\Models\Item;
 
-use App\Http\Resources\Checklist as ChecklistResource;
+use App\Http\Resources\Item as ItemResource;
 
 use Log;
 
 class ItemController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all(Request $request)
+    {
+        $page_limit = $request->page_limit ?? 10;
+        // $page_offset = $request->page_offset ?? 0;
+
+        $query = Item::query();
+
+        if($request->filter){
+            foreach ($request->filter as $key => $value) {
+                $query = $query->where($key,'like',"%".$value."%");
+            }
+        }
+
+        $data = new ItemResource($query->paginate($page_limit));
+
+        return $data;
+
+    }
+
     /**
      * Display a listing of the resource.
      *

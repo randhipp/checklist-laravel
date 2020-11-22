@@ -57,8 +57,11 @@ Route::group([
         // {{url}}/api/v1/templates/
         Route::resource('checklists/templates', 'TemplateController');
 
+        Route::get('checklists/items', 'ItemController@all')->name('items.all');
+
         Route::resource('checklists', 'ChecklistController');
 
         Route::resource('checklists/{id}/items', 'ItemController');
+
 
 });

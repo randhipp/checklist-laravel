@@ -15,7 +15,7 @@ use App\Models\Items;
 
 use Laravel\Sanctum\Sanctum;
 
-class ItemsListAllTest extends TestCase
+class ItemsListAllAvailableTest extends TestCase
 {
     use JsonAssertions;
 
@@ -26,7 +26,7 @@ class ItemsListAllTest extends TestCase
      */
     public function testGetAllNoAuth()
     {
-        $response = $this->json('GET','/api/v1/checklists/2/items',
+        $response = $this->json('GET','/api/v1/checklists/items',
         [
             'Accept' => 'application/json'
         ]);
@@ -46,9 +46,9 @@ class ItemsListAllTest extends TestCase
              ['login']
         );
 
-        $jsonDocument = app_path('storage/json-schema/items','list-all-in-checklist.json');
+        $jsonDocument = app_path('storage/json-schema/items','all.json');
 
-        $response = $this->json('GET','/api/v1/checklists/2/items',
+        $response = $this->json('GET','/api/v1/checklists/items',
          [
              'Accept' => 'application/json',
          ]);
