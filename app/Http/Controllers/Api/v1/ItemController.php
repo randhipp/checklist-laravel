@@ -87,7 +87,7 @@ class ItemController extends Controller
         $id->items()->save($item);
 
         return response()->json([
-            'data' => $this->transformData($id,$item)
+            'data' => $this->transformData($id,$item->id)
         ], 201);
     }
 
@@ -154,11 +154,11 @@ class ItemController extends Controller
      * @param  \App\Models\Checklist  $checklist
      * @return Array
      */
-    public function transformData(Checklist $checklist, Item $item = null)
+    public function transformData(Checklist $checklist, $id = null)
     {
         $domain = 'checklists';
 
-        if($item == null){
+        if($id == null){
             return [
                 'type' => $domain,
                 'id' => $checklist->id,
@@ -168,10 +168,12 @@ class ItemController extends Controller
                 ]
             ];
         }
+        $item = Item::find($id);
+
         return [
             'type' => $domain,
-            'id' => $checklist->id,
-            'attributes' => $checklist,
+            'id' => $item->id,
+            'attributes' => $item,
             'links' => [
                 'self' => url('api/v1/'.$domain, $checklist->id).'/items/'.$item->id
             ]
