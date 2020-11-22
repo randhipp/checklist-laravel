@@ -59,6 +59,7 @@ Route::group([
 
         Route::resource('checklists', 'ChecklistController');
 
+        Route::get('checklists/items', 'ItemController@all')->name('items.all');
         Route::resource('checklists/{id}/items', 'ItemController');
 
 });
