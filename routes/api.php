@@ -59,4 +59,6 @@ Route::group([
 
         Route::resource('checklists', 'ChecklistController');
 
+        Route::get('checklists/{Checklist}/items/{Item}', 'ItemController@show')->name('items.show');
+
 });
