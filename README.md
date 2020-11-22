@@ -74,3 +74,10 @@ php artisan test
 ![test.jpg](./storage/git-images/2ddaa9c01712876173d81b03d17a39b9.png)
 
 
+# Changelog
+
+Changelog on pull request
+
+eg: https://github.com/randhipp/checklist-laravel/pull/18
+
+![changelog.png](./storage/git-images/changelog.png)
