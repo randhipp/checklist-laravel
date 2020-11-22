@@ -55,7 +55,21 @@ Download the file and import to postman to run test to this API.
 
 This microservice is tested with provided schema.
 
-run `php artisan test` or `vendor/bin/phpunit`
+```bash
+# You are free to define other testing environment configuration values as necessary. 
+# The testing environment variables may be configured in the phpunit.xml file, 
+# but make sure to clear your configuration cache 
+# using the config:clear Artisan command before running your tests!
+
+# to make sure use the .env.testing
+php artisan config:clear
+
+# use phpunit
+vendor/bin/phpunit 
+
+# or use php artisan test
+php artisan test 
+```
 
 ![test.jpg](./storage/git-images/2ddaa9c01712876173d81b03d17a39b9.png)
 

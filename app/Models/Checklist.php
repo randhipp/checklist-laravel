@@ -22,7 +22,7 @@ class Checklist extends BaseModel
     ];
 
     protected $casts = [
-        'id' => 'string',
+        // 'id' => 'string',
         'is_completed' => 'boolean',
         'due' => 'datetime',
         'urgency' => 'integer'

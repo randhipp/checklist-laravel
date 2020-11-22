@@ -1,15 +1,9 @@
 {
     "type": "object",
-    "title": "Checklist Response",
+    "title": "Checklist Item Response",
     "properties": {
       "data": {
         "type": "object",
-        "required": [
-          "type",
-          "id",
-          "attributes",
-          "links"
-        ],
         "properties": {
           "type": {
             "type": "string"
@@ -19,12 +13,6 @@
           },
           "attributes": {
             "type": "object",
-            "title": "Cheklist Attributes",
-            "required": [
-              "object_domain",
-              "object_id",
-              "description"
-            ],
             "properties": {
               "object_domain": {
                 "type": "string"
@@ -41,33 +29,45 @@
               "completed_at": {
                 "type": "null"
               },
-              "updated_by": {
-                "type": ["integer","null"]
+              "last_update_by": {
+                "type": "null"
               },
-              "updated_at": {
-                "type": ["string","null"]
+              "update_at": {
+                "type": "null"
               },
               "created_at": {
                 "type": "string"
               },
-              "due": {
-                "type": [
-                  "string",
-                  "null"
-                ],
-                "format": "date-time",
-                "example": "2020-01-29 11:44:40"
-              },
-              "urgency": {
-                "type": "integer"
+              "item": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "is_completed": {
+                    "type": "boolean"
+                  },
+                  "completed_at": {
+                    "type": "null"
+                  },
+                  "last_update_by": {
+                    "type": "null"
+                  },
+                  "update_at": {
+                    "type": "null"
+                  },
+                  "created_at": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
           "links": {
             "type": "object",
-            "required": [
-              "self"
-            ],
             "properties": {
               "self": {
                 "type": "string"
@@ -76,8 +76,5 @@
           }
         }
       }
-    },
-    "required": [
-      "data"
-    ]
+    }
   }

@@ -1,15 +1,10 @@
 {
     "type": "object",
-    "title": "Checklist Response",
+    "title": "Item Response",
+    "description": "Response of item request",
     "properties": {
       "data": {
         "type": "object",
-        "required": [
-          "type",
-          "id",
-          "attributes",
-          "links"
-        ],
         "properties": {
           "type": {
             "type": "string"
@@ -19,19 +14,12 @@
           },
           "attributes": {
             "type": "object",
-            "title": "Cheklist Attributes",
+            "title": "Item Attributes",
+            "description": "Item attributes",
             "required": [
-              "object_domain",
-              "object_id",
               "description"
             ],
             "properties": {
-              "object_domain": {
-                "type": "string"
-              },
-              "object_id": {
-                "type": "string"
-              },
               "description": {
                 "type": "string"
               },
@@ -41,33 +29,42 @@
               "completed_at": {
                 "type": "null"
               },
-              "updated_by": {
-                "type": ["integer","null"]
-              },
-              "updated_at": {
-                "type": ["string","null"]
-              },
-              "created_at": {
-                "type": "string"
-              },
               "due": {
                 "type": [
-                  "string",
-                  "null"
+                  "null",
+                  "string"
                 ],
                 "format": "date-time",
                 "example": "2020-01-29 11:44:40"
               },
               "urgency": {
-                "type": "integer"
+                "type": "null"
+              },
+              "updated_by": {
+                "type": "null"
+              },
+              "updated_at": {
+                "type": "null"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "assignee_id": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "task_id": {
+                "type": [
+                  "null",
+                  "number"
+                ]
               }
             }
           },
           "links": {
             "type": "object",
-            "required": [
-              "self"
-            ],
             "properties": {
               "self": {
                 "type": "string"
@@ -76,8 +73,5 @@
           }
         }
       }
-    },
-    "required": [
-      "data"
-    ]
+    }
   }
