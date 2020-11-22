@@ -11,6 +11,7 @@ use App\Models\Checklist;
 use App\Models\Item;
 
 use App\Http\Resources\Item as ItemResource;
+use App\Http\Requests\ItemStoreRequest;
 
 use Log;
 
@@ -72,9 +73,22 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Checklist $id, ItemStoreRequest $request)
     {
-        //
+        $request = json_decode(json_encode($request->data['attribute']));
+
+        $item = new Item([
+            'description' => $request->description,
+            'due' => $request->due,
+            'urgency' => $request->urgency,
+            'assignee_id' => $request->assignee_id
+        ]);
+
+        $id->items()->save($item);
+
+        return response()->json([
+            'data' => $this->transformData($id,$item->id)
+        ], 201);
     }
 
     /**
@@ -140,16 +154,28 @@ class ItemController extends Controller
      * @param  \App\Models\Checklist  $checklist
      * @return Array
      */
-    public function transformData(Checklist $checklist)
+    public function transformData(Checklist $checklist, $id = null)
     {
-        $domain = \explode('.',request()->route()->getName())[0];
+        $domain = 'checklists';
+
+        if($id == null){
+            return [
+                'type' => $domain,
+                'id' => $checklist->id,
+                'attributes' => $checklist,
+                'links' => [
+                    'self' => url('api/v1/'.$domain, $checklist->id).'/items'
+                ]
+            ];
+        }
+        $item = Item::find($id);
 
         return [
             'type' => $domain,
-            'id' => $checklist->id,
-            'attributes' => $checklist,
+            'id' => $item->id,
+            'attributes' => $item,
             'links' => [
-                'self' => url('api/v1/'.$domain, $checklist->id.'/items')
+                'self' => url('api/v1/'.$domain, $checklist->id).'/items/'.$item->id
             ]
         ];
     }

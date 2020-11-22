@@ -14,10 +14,12 @@ class Item extends BaseModel
 
     protected static $logAttributes = ['*'];
 
-    public $fillable = ['description'];
+    public $fillable = [
+        'description','due','urgency','assignee_id'
+    ];
 
     protected $hidden = [
-        'id','created_at','updated_at'
+        'id'
     ];
 
     protected $casts = [
