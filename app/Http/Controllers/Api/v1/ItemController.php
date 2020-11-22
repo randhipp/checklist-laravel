@@ -11,6 +11,7 @@ use App\Models\Checklist;
 use App\Models\Item;
 
 use App\Http\Resources\Item as ItemResource;
+use App\Http\Requests\ItemStoreRequest;
 
 use Log;
 
@@ -72,9 +73,22 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Checklist $id, ItemStoreRequest $request)
     {
+        $request = json_decode(json_encode($request->data['attribute']));
 
+        $item = new Item([
+            'description' => $request->description,
+            'due' => $request->due,
+            'urgency' => $request->urgency,
+            'assignee_id' => $request->assignee_id
+        ]);
+
+        $id->items()->save($item);
+
+        return response()->json([
+            'data' => $this->transformData($id,$item)
+        ], 201);
     }
 
     /**
@@ -140,16 +154,26 @@ class ItemController extends Controller
      * @param  \App\Models\Checklist  $checklist
      * @return Array
      */
-    public function transformData(Checklist $checklist)
+    public function transformData(Checklist $checklist, Item $item = null)
     {
-        $domain = \explode('.',request()->route()->getName())[0];
+        $domain = 'checklists';
 
+        if($item == null){
+            return [
+                'type' => $domain,
+                'id' => $checklist->id,
+                'attributes' => $checklist,
+                'links' => [
+                    'self' => url('api/v1/'.$domain, $checklist->id).'/items'
+                ]
+            ];
+        }
         return [
             'type' => $domain,
             'id' => $checklist->id,
             'attributes' => $checklist,
             'links' => [
-                'self' => url('api/v1/'.$domain, $checklist->id.'/items')
+                'self' => url('api/v1/'.$domain, $checklist->id).'/items/'.$item->id
             ]
         ];
     }
