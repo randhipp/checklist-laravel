@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\Checklist;
-use App\Models\Item;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChecklistApiRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+use App\Models\Checklist;
+use App\Models\Item;
 
 use App\Http\Resources\Checklist as ChecklistResource;
 
@@ -21,9 +21,15 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Checklist $id)
     {
-        //
+        if( !$id ){
+            throw new ModelNotFoundException;
+        }
+
+        return response()->json([
+            'data' => $this->transformData(Checklist::with('items')->find($id->id))
+        ], 200);
     }
 
     /**
@@ -53,23 +59,21 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show(Checklist $checklist, Item $item)
+    public function show(Request $request, Checklist $id, Item $item)
     {
 
-        // todo : add item and checklist validation
-        // dd($item);
-        if( !$item->id || !$checklist->id ){
+        if( !$item || !$id ){
             throw new ModelNotFoundException;
         }
-        // $data = $this->transformData($item);
+
+        if( $item->checklist_id !== $id->id ){
+            throw new ModelNotFoundException;
+        }
+
         return response()->json([
             'data' => $item
         ], 200);
 
-        $data = $this->transformData($item);
-        return response()->json([
-            'data' => $data
-        ], 200);
     }
 
     /**
@@ -112,16 +116,16 @@ class ItemController extends Controller
      * @param  \App\Models\Checklist  $checklist
      * @return Array
      */
-    public function transformData(Item $item)
+    public function transformData(Checklist $checklist)
     {
         $domain = \explode('.',request()->route()->getName())[0];
 
         return [
             'type' => $domain,
-            'id' => $item->id,
-            'attributes' => Checklist::with('items')->find($item->id),
+            'id' => $checklist->id,
+            'attributes' => $checklist,
             'links' => [
-                'self' => url('api/v1/'.$domain, $item->id)
+                'self' => url('api/v1/'.$domain, $checklist->id.'/items')
             ]
         ];
     }
