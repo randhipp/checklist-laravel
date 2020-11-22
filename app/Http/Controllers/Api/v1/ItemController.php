@@ -143,9 +143,21 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy(Checklist $id, Item $item)
     {
-        //
+        if( !$item || !$id ){
+            throw new ModelNotFoundException;
+        }
+
+        if( (int)$item->checklist_id !== (int)$id->id ){
+            throw new ModelNotFoundException;
+        }
+
+        $item->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Delete success!'
+        ], 200);
     }
 
      /**
