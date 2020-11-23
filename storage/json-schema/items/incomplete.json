@@ -1,0 +1,26 @@
+{
+    "type": "object",
+    "title": "Checklist Complete Response",
+    "properties": {
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "item_id": {
+              "type": "integer"
+            },
+            "is_completed": {
+              "type": "boolean"
+            },
+            "checklist_id": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
