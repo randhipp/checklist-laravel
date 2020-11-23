@@ -12,6 +12,7 @@ use App\Models\Item;
 
 use App\Http\Resources\Item as ItemResource;
 use App\Http\Requests\ItemStoreRequest;
+use App\Http\Requests\ItemPatchRequest;
 
 use Log;
 
@@ -132,9 +133,23 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(ItemPatchRequest $request, Checklist $id, Item $item)
     {
-        //
+        if( !$item || !$id ){
+            throw new ModelNotFoundException;
+        }
+
+        if( $item->checklist_id !== $id->id ){
+            throw new ModelNotFoundException;
+        }
+
+        $data = $request->data['attribute'];
+
+        $item->update($data);
+
+        return response()->json([
+            'data' => Item::find($item->id)
+        ], 200);
     }
 
     /**
@@ -143,9 +158,21 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy(Checklist $id, Item $item)
     {
-        //
+        if( !$item || !$id ){
+            throw new ModelNotFoundException;
+        }
+
+        if( (int)$item->checklist_id !== (int)$id->id ){
+            throw new ModelNotFoundException;
+        }
+
+        $item->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Delete success!'
+        ], 200);
     }
 
      /**
