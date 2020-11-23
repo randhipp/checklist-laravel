@@ -59,6 +59,8 @@ Route::group([
 
         Route::get('checklists/items', 'ItemController@all')->name('items.all');
 
+        Route::post('checklists/incomplete', 'ItemController@incomplete')->name('items.incomplete');
+
         Route::resource('checklists', 'ChecklistController');
 
         Route::resource('checklists/{id}/items', 'ItemController');
