@@ -13,6 +13,7 @@ use App\Models\Item;
 use App\Http\Resources\Item as ItemResource;
 use App\Http\Requests\ItemStoreRequest;
 use App\Http\Requests\ItemPatchRequest;
+use App\Http\Requests\ItemIncompleteRequest;
 
 use Log;
 
@@ -116,14 +117,31 @@ class ItemController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the incomplete item(s)
      *
-     * @param  \App\Models\Item  $item
+     * @param  json
      * @return \Illuminate\Http\Response
      */
-    public function edit(Item $item)
+    public function incomplete(ItemIncompleteRequest $request)
     {
-        //
+        $items = Item::where('is_completed',0)->simplePaginate(10);
+
+        if(!$items){
+            return response()->json([
+                'data' => []
+            ], 200);
+        }
+
+        $items->transform(function ($item, $key) {
+            return [
+                'id' => (int)$item->id,
+                'item_id' => (int)$item->id,
+                'is_completed' => $item->is_completed,
+                'checklist_id' => (string)$item->checklist_id
+            ] ;
+        });
+
+        return response()->json($items, 200);
     }
 
     /**
