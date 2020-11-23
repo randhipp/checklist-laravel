@@ -78,8 +78,8 @@ php artisan test
 
 Changelog written on pull request
 
-eg changelog on : 
-https://github.com/randhipp/checklist-laravel/pull/18
-https://github.com/randhipp/checklist-laravel/pull/20
+eg changelog on :     
+https://github.com/randhipp/checklist-laravel/pull/18    
+https://github.com/randhipp/checklist-laravel/pull/20    
 
 ![changelog.png](./storage/git-images/changelog.png)
