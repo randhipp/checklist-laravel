@@ -49,7 +49,7 @@ class ItemsIncompleteTest extends TestCase
             'Accept' => 'application/json'
         ]);
 
-        $response->assertStatus(404);
+        $response->assertStatus(422);
     }
 
     /**
