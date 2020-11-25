@@ -28,7 +28,7 @@ Laravel 8 with Sanctum
 ## Live Development - CI/CD using deployer
 
 API Endpoint : 
-http://checklists.wafvel.com/api/v1
+https://checklists.wafvel.com/api/v1
 
 This endpoint always updated after push on development branch.
 ## Documentation 
